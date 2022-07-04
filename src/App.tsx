@@ -8,8 +8,8 @@ function App() {
             <Box
                 component="form"
                 sx={{
-                    p: 8,
                     backgroundColor: '#181818',
+                    padding: '40px 40px 260px',
                 }}
             >
                 <PasswordInput />
