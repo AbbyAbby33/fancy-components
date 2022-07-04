@@ -23,8 +23,7 @@ export default function PasswordInput() {
         alignItems: "center",
         "& svg": {
             // background: "red",
-            marginRight: "12px",
-            color: "#00D1FF"
+            marginRight: "12px"
         }
     }));
 
@@ -80,24 +79,28 @@ export default function PasswordInput() {
                 color: "#fff"
             }}>
                 <NoticeItemStyle>
-                    <CheckCircleIcon/>
-                    {/* <CheckCircleOutlineIcon /> */}
+                    <CheckCircleIcon color="primary"/>
+                    {/* <CheckCircleOutlineIcon color="secondary"/> */}
                     <p>Have at least one uppercase letter</p>
                 </NoticeItemStyle>
                 <NoticeItemStyle>
-                    <CheckCircleIcon />
+                    {/* <CheckCircleIcon color="primary" /> */}
+                    <CheckCircleOutlineIcon color="secondary"/>
                     <p>Have at least one lowercase letter</p>
                 </NoticeItemStyle>
                 <NoticeItemStyle>
-                    <CheckCircleIcon />
+                    {/* <CheckCircleIcon color="primary" /> */}
+                    <CheckCircleOutlineIcon color="secondary"/>
                     <p>Have at least one number</p>
                 </NoticeItemStyle>
                 <NoticeItemStyle>
-                    <CheckCircleIcon />
+                    {/* <CheckCircleIcon color="primary" /> */}
+                    <CheckCircleOutlineIcon color="secondary"/>
                     <p>Have at least one special character<br />(!@#$...etc)</p>
                 </NoticeItemStyle>
                 <NoticeItemStyle>
-                    <CheckCircleIcon />
+                    {/* <CheckCircleIcon color="primary" /> */}
+                    <CheckCircleOutlineIcon color="secondary"/>
                     <p>Longer than 8 characters</p>
                 </NoticeItemStyle>
             </div>

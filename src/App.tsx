@@ -1,10 +1,35 @@
 import './App.css';
 import Box from '@mui/material/Box';
 import PasswordInput from './components/PasswordInput';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
+const theme = createTheme({
+    // mode: 'dark', // 可以調暗色主題
+    palette: {
+        primary: {
+            main: '#00D1FF',
+        },
+        secondary: {
+            main: '#565656',
+        },
+        // info: {
+        //     main: '',
+        // },
+        // warning: {
+        //     main: '',
+        // },
+        // error: {
+        //     main: '',
+        // },
+        // success: {
+        //     main: '',
+        // },
+    },
+});
 
 function App() {
     return (
-        <div>
+        <ThemeProvider theme={theme}>
             <Box
                 component="form"
                 sx={{
@@ -14,7 +39,7 @@ function App() {
             >
                 <PasswordInput />
             </Box>
-        </div>
+        </ThemeProvider>
     );
 }
 
