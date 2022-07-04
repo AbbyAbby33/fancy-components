@@ -7,6 +7,14 @@ import { styled } from '@mui/material/styles';
 export default function PasswordInput() {
 
     const [inputFocus, setInputFocus] = useState(false);
+    const [password, setPassword] = useState('');
+    const [passwordPassRule, setPasswordPassRule] = useState({
+        haveUppercase: false,
+        haveLowercase: false,
+        haveNumber: false,
+        haveSpecialCharacter: false,
+        longerThan8: false,
+    });
 
     const onFocus = function () {
         console.log('onFocus');
@@ -18,6 +26,32 @@ export default function PasswordInput() {
         setInputFocus(false);
     }
 
+    /** 密碼有變化 */
+    const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // console.log('event.target.value', event.target.value);
+        setPassword(event.target.value);
+        verifyPassword(event.target.value);
+    };
+
+    /** 驗證密碼 */
+    const verifyPassword = (password: string) => {
+        let haveUppercase = password.match(/[A-Z]+/) ? true : false;
+        let haveLowercase = password.match(/[a-z]+/) ? true : false;
+        let haveNumber = password.match(/[0-9]+/) ? true : false;
+        let haveSpecialCharacter = password.match(/[!@#$%*?&]+/) ? true : false;
+        let longerThan8 = password.length >= 8 ? true : false;
+        const rule = {
+            haveUppercase: haveUppercase,
+            haveLowercase: haveLowercase,
+            haveNumber: haveNumber,
+            haveSpecialCharacter: haveSpecialCharacter,
+            longerThan8: longerThan8,
+        }
+        // console.log('rule', rule);
+        setPasswordPassRule(rule);
+    }
+
+    /** 密碼輸入提示style */
     const NoticeItemStyle = styled('div')(({ theme }) => ({
         display: "flex",
         alignItems: "center",
@@ -64,7 +98,8 @@ export default function PasswordInput() {
                     }
                 }}
                 onFocus={onFocus}
-                onBlur={onBlur} />
+                onBlur={onBlur}
+                onChange={onPasswordChange} />
 
             {/* 密碼提示 */}
             <div style={{
@@ -78,29 +113,25 @@ export default function PasswordInput() {
                 marginTop: "8px",
                 color: "#fff"
             }}>
+
                 <NoticeItemStyle>
-                    <CheckCircleIcon color="primary"/>
-                    {/* <CheckCircleOutlineIcon color="secondary"/> */}
+                    {passwordPassRule.haveUppercase ? <CheckCircleIcon color="primary" /> : <CheckCircleOutlineIcon color="secondary" />}
                     <p>Have at least one uppercase letter</p>
                 </NoticeItemStyle>
                 <NoticeItemStyle>
-                    {/* <CheckCircleIcon color="primary" /> */}
-                    <CheckCircleOutlineIcon color="secondary"/>
+                    {passwordPassRule.haveLowercase ? <CheckCircleIcon color="primary" /> : <CheckCircleOutlineIcon color="secondary" />}
                     <p>Have at least one lowercase letter</p>
                 </NoticeItemStyle>
                 <NoticeItemStyle>
-                    {/* <CheckCircleIcon color="primary" /> */}
-                    <CheckCircleOutlineIcon color="secondary"/>
+                    {passwordPassRule.haveNumber ? <CheckCircleIcon color="primary" /> : <CheckCircleOutlineIcon color="secondary" />}
                     <p>Have at least one number</p>
                 </NoticeItemStyle>
                 <NoticeItemStyle>
-                    {/* <CheckCircleIcon color="primary" /> */}
-                    <CheckCircleOutlineIcon color="secondary"/>
+                    {passwordPassRule.haveSpecialCharacter ? <CheckCircleIcon color="primary" /> : <CheckCircleOutlineIcon color="secondary" />}
                     <p>Have at least one special character<br />(!@#$...etc)</p>
                 </NoticeItemStyle>
                 <NoticeItemStyle>
-                    {/* <CheckCircleIcon color="primary" /> */}
-                    <CheckCircleOutlineIcon color="secondary"/>
+                    {passwordPassRule.longerThan8 ? <CheckCircleIcon color="primary" /> : <CheckCircleOutlineIcon color="secondary" />}
                     <p>Longer than 8 characters</p>
                 </NoticeItemStyle>
             </div>
