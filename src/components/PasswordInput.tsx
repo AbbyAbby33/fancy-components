@@ -111,7 +111,8 @@ export default function PasswordInput() {
                 boxShadow: "4px 4px 20px rgba(0, 0, 0, 0.3)",
                 borderRadius: "8px",
                 marginTop: "8px",
-                color: "#fff"
+                color: "#fff",
+                display: inputFocus ? "block" : "none"
             }}>
 
                 <NoticeItemStyle>
