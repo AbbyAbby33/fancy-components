@@ -112,13 +112,13 @@ export default function Calendar() {
                 <span>{'>'}</span>
             </div>
             <div className="date-list">
-                <span className="date">Su</span>
-                <span className="date">Mo</span>
-                <span className="date">Tu</span>
-                <span className="date">We</span>
-                <span className="date">Th</span>
-                <span className="date">Fr</span>
-                <span className="date">Sa</span>
+                <span className="week">Su</span>
+                <span className="week">Mo</span>
+                <span className="week">Tu</span>
+                <span className="week">We</span>
+                <span className="week">Th</span>
+                <span className="week">Fr</span>
+                <span className="week">Sa</span>
             </div>
             <div className="date-list">
                 {dateList.map(v => {
