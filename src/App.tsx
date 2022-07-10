@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import PasswordPage from './pages/PasswordPage';
 import CalendarPage from './pages/CalendarPage';
+import DatePickerPage from './pages/DatePickerPage';
 
 const theme = createTheme({
     // mode: 'dark', // 可以調暗色主題
@@ -53,6 +54,9 @@ function App() {
                     <NavLink to={`/calendarPage`}>
                         <Button variant="contained" size="small">Calendar</Button>
                     </NavLink>
+                    <NavLink to={`/datePickerPage`}>
+                        <Button variant="contained" size="small">DatePicker</Button>
+                    </NavLink>
                 </Stack>
             </Box>
 
@@ -61,6 +65,7 @@ function App() {
                 <Route path="/" element={<PasswordPage />} />
                 <Route path="passwordPage" element={<PasswordPage />} />
                 <Route path="calendarPage" element={<CalendarPage />} />
+                <Route path="datePickerPage" element={<DatePickerPage />} />
                 <Route path="*" element={<PasswordPage />} />
             </Routes>
         </ThemeProvider>
