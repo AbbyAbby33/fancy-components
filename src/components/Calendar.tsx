@@ -5,7 +5,18 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 
-export default function Calendar() {
+interface CalendarInterface {
+    targetDate?: Date;
+}
+
+interface DateObjInterface {
+    id: string | null,
+    Obj: Date | null,
+    day: number | null,
+    style: string | null
+}
+
+export default function Calendar(props: CalendarInterface) {
 
     const monthDisplayList = [
         { s: 'Jan', l: 'January' },
@@ -22,28 +33,35 @@ export default function Calendar() {
         { s: 'Dec', l: 'December' }
     ];
 
-    const [selectedDay, setSelectedDay] = useState(new Date());
+    const { targetDate } = props;
+
+    const [selectedDayObj, setSelectedDayObj] = useState<DateObjInterface>({
+        id: null,
+        Obj: null,
+        day: null,
+        style: null
+    });
     const [yearTitle, setYearTitle] = useState(0);
     const [monthTitle, setMonthTitle] = useState(0);
     const [dateList, setDateList] = useState<Array<any>>([]);
 
     // 初始化
     useEffect(() => {
-        renderCalendar();
+        let date = targetDate ? targetDate : new Date();
+        date = new Date(date.setDate(date.getDate())); // 清空時分秒
+        renderCalendar(date, true);
     }, [])
 
     /** 畫日曆 */
-    const renderCalendar = function () {
+    const renderCalendar = function (initDay: Date, firstTimeFlag: boolean) {
         // reset
         setDateList([]);
 
-        let today = new Date();
-        // let today = new Date('2022-06-10');
         // 年分
-        const year = today.getFullYear();
+        const year = initDay.getFullYear();
         setYearTitle(year);
         // 月份
-        const month = today.getMonth() + 1;
+        const month = initDay.getMonth() + 1;
         setMonthTitle(month);
 
         /** 這個月第一天 */
@@ -53,13 +71,18 @@ export default function Calendar() {
 
         // 當月
         while (firstDay.getMonth() === current.getMonth()) {
-            // console.log('current.getDate()', current.getDate());
-            // renderDate();
             const day = {
+                id: uuidv4(),
                 Obj: current,
                 day: current.getDate(),
                 style: 'this-month'
             };
+            // 初次渲染元件要處理顯示藍色
+            if (firstTimeFlag) {
+                if (current.getDate() === initDay.getDate()) {
+                    setSelectedDayObj(day);
+                }
+            }
             newList = [...newList, day];
             current = new Date(current.setDate(current.getDate() + 1)); // next
         }
@@ -67,10 +90,11 @@ export default function Calendar() {
         // 上個月
         let firstDayWeek = firstDay.getDay();
         current = firstDay;
-        console.log('firstDayWeek', firstDayWeek, 'current', current);
+        // console.log('firstDayWeek', firstDayWeek, 'current', current);
         for (let i = firstDayWeek - 1; i > 0; i--) {
             current = new Date(current.getTime() - 86400000); // before
             const day = {
+                id: uuidv4(),
                 Obj: new Date(current.getTime() - 86400000),
                 day: new Date(current.getTime() - 86400000).getDate(),
                 style: 'last-month'
@@ -82,22 +106,29 @@ export default function Calendar() {
         const lastDay = new Date(year, (month - 1), newList[newList.length - 1].day);
         let lastDayWeek = lastDay.getDay();
         current = lastDay;
-        console.log('lastDayWeek', lastDayWeek);
+        // console.log('lastDayWeek', lastDayWeek);
 
         for (let i = lastDayWeek + 1; i < 7; i++) {
             current = new Date(current.getTime() + 86400000); // before
             const day = {
+                id: uuidv4(),
                 Obj: current,
                 day: current.getDate(),
                 style: 'next-month'
             };
             newList = [...newList, day];
-            console.log('current', current);
-
+            // console.log('current', current);
         }
 
         setDateList(newList);
-        console.log('selectedDay', selectedDay, 'firstDay', firstDay, 'current', current, 'dateList', dateList);
+        // console.log('selectedDayObj', selectedDayObj, 'firstDay', firstDay, 'current', current, 'dateList', dateList);
+    }
+
+    /** 點擊日期 */
+    // TODO: 補dateObj型別
+    const onDateClick = function (event: React.MouseEvent<HTMLElement>, dateObj: any) {
+        // console.log('dateObj', dateObj);
+        setSelectedDayObj(dateObj);
     }
 
     const CancelButton = styled(Button)({});
@@ -122,7 +153,12 @@ export default function Calendar() {
             </div>
             <div className="date-list">
                 {dateList.map(v => {
-                    return <span className={'date ' + v.style} key={uuidv4()}>{v.day}</span>
+                    return (
+                        <span className={'date ' + v.style + ' ' + (v.id === selectedDayObj.id ? 'selected-date' : '')} key={v.id}
+                            onClick={(event: React.MouseEvent<HTMLElement>) => onDateClick(event, v)}>
+                            {v.day}
+                        </span>
+                    )
                 })}
             </div>
 

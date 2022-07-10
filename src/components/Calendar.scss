@@ -57,6 +57,9 @@
                 color: #080808;
                 cursor: pointer;
             }
+            &.selected-date {
+                background-color: #00A3FF;
+            }
         }
     }
 
