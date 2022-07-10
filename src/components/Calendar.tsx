@@ -105,10 +105,10 @@ export default function Calendar() {
     return (
         <div className="fc-calendar">
             <p>Text</p>
-            <div className="year-title">{monthDisplayList[monthTitle-1].s},&nbsp;{yearTitle}</div>
+            <div className="year-title">{monthTitle ? monthDisplayList[monthTitle - 1].s : ''},&nbsp;{yearTitle}</div>
             <div className="month-title">
                 <span>{'<'}</span>
-                <span>{monthDisplayList[monthTitle-1].l}&nbsp;&nbsp;{yearTitle}</span>
+                <span>{monthTitle ? monthDisplayList[monthTitle - 1].l : ''}&nbsp;&nbsp;{yearTitle}</span>
                 <span>{'>'}</span>
             </div>
             <div className="date-list">
