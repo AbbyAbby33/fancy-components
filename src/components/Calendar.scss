@@ -1,0 +1,50 @@
+.fc-calendar {
+    width: 320px;
+    background: #1b1b1b;
+    box-shadow: 4px 4px 20px 0px #0000004d;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 24px;
+    box-sizing: border-box;
+
+    // 年分
+    .year-title {
+        // font-family: "Inter";
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 137.5%;
+    }
+
+    // 月份
+    .month-title {
+        // font-family: "Inter";
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        // text-align: center;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    // 日期
+    .date-list {
+        display: flex;
+        flex-wrap: wrap;
+
+        .date {
+            width: 38px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            &.next-month, &.last-month {
+                opacity: 0.5;
+            }
+        }
+    }
+
+    // 按鈕
+    button {
+        color: #fff;
+        font-weight: 600;
+    }
+}
