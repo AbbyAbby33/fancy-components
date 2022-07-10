@@ -57,6 +57,9 @@
                 color: #080808;
                 cursor: pointer;
             }
+            &.pre-selected-date {
+                border: 1px solid #00A3FF;
+            }
             &.selected-date {
                 background-color: #00A3FF;
             }

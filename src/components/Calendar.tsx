@@ -41,6 +41,12 @@ export default function Calendar(props: CalendarInterface) {
         day: null,
         style: null
     });
+    const [preSelectedDayObj, setPreSelectedDayObj] = useState<DateObjInterface>({
+        id: null,
+        Obj: null,
+        day: null,
+        style: null
+    });
     const [yearTitle, setYearTitle] = useState(0);
     const [monthTitle, setMonthTitle] = useState(0);
     const [dateList, setDateList] = useState<Array<any>>([]);
@@ -128,6 +134,8 @@ export default function Calendar(props: CalendarInterface) {
     // TODO: 補dateObj型別
     const onDateClick = function (event: React.MouseEvent<HTMLElement>, dateObj: any) {
         // console.log('dateObj', dateObj);
+
+        setPreSelectedDayObj(selectedDayObj);
         setSelectedDayObj(dateObj);
     }
 
@@ -154,7 +162,9 @@ export default function Calendar(props: CalendarInterface) {
             <div className="date-list">
                 {dateList.map(v => {
                     return (
-                        <span className={'date ' + v.style + ' ' + (v.id === selectedDayObj.id ? 'selected-date' : '')} key={v.id}
+                        <span className={'date ' + v.style + ' ' + (v.id === selectedDayObj.id ? 'selected-date' : '') + ' ' +
+                            (v.id === preSelectedDayObj.id ? 'pre-selected-date' : '')}
+                            key={v.id}
                             onClick={(event: React.MouseEvent<HTMLElement>) => onDateClick(event, v)}>
                             {v.day}
                         </span>
