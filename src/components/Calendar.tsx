@@ -81,7 +81,7 @@ export default function Calendar(props: CalendarInterface) {
 
         /** 這個月第一天 */
         let firstDay = new Date(year, (month - 1), 1);
-        let current = firstDay;
+        let current = cloneDeep(firstDay);
         let newList: any[] = [];
         // 當月
         while (firstDay.getMonth() === current.getMonth()) {
@@ -114,14 +114,14 @@ export default function Calendar(props: CalendarInterface) {
 
         // 上個月
         let firstDayWeek = firstDay.getDay();
-        current = firstDay;
+        current = cloneDeep(firstDay);
         // console.log('firstDayWeek', firstDayWeek, 'current', current);
-        for (let i = firstDayWeek - 1; i > 0; i--) {
+        for (let i = firstDayWeek - 1; i >= 0; i--) {
             current = new Date(current.getTime() - 86400000); // before
             const day = {
                 id: uuidv4(),
-                Obj: new Date(current.getTime() - 86400000),
-                day: new Date(current.getTime() - 86400000).getDate(),
+                Obj: current,
+                day: current.getDate(),
                 style: 'last-month',
                 time: current.getTime(),
             };
@@ -132,7 +132,6 @@ export default function Calendar(props: CalendarInterface) {
         const lastDay = new Date(year, (month - 1), newList[newList.length - 1].day);
         let lastDayWeek = lastDay.getDay();
         current = lastDay;
-        // console.log('lastDayWeek', lastDayWeek);
 
         for (let i = lastDayWeek + 1; i < 7; i++) {
             current = new Date(current.getTime() + 86400000); // before
@@ -144,7 +143,6 @@ export default function Calendar(props: CalendarInterface) {
                 time: current.getTime(),
             };
             newList = [...newList, day];
-            // console.log('current', current);
         }
 
         let temp = cloneDeep(newList);
