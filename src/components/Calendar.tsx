@@ -146,9 +146,9 @@ export default function Calendar(props: CalendarInterface) {
             <p>Text</p>
             <div className="year-title">{monthTitle ? monthDisplayList[monthTitle - 1].s : ''},&nbsp;{yearTitle}</div>
             <div className="month-title">
-                <span>{'<'}</span>
+                <span className="go-last-month-btn">{'<'}</span>
                 <span>{monthTitle ? monthDisplayList[monthTitle - 1].l : ''}&nbsp;&nbsp;{yearTitle}</span>
-                <span>{'>'}</span>
+                <span className="go-next-month-btn">{'>'}</span>
             </div>
             <div className="date-list">
                 <span className="week">Su</span>

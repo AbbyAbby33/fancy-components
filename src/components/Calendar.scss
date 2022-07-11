@@ -24,6 +24,13 @@
         // text-align: center;
         display: flex;
         justify-content: space-between;
+
+        .go-last-month-btn {
+            cursor: pointer;
+        }
+        .go-next-month-btn {
+            cursor: pointer;
+        }
     }
 
     // 日期
@@ -58,10 +65,10 @@
                 cursor: pointer;
             }
             &.pre-selected-date {
-                border: 1px solid #00A3FF;
+                border: 1px solid #00a3ff;
             }
             &.selected-date {
-                background-color: #00A3FF;
+                background-color: #00a3ff;
             }
         }
     }
