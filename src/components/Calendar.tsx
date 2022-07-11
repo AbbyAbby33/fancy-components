@@ -6,14 +6,19 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import { cloneDeep } from 'lodash';
 interface CalendarInterface {
+    /** 選取日期 */
     targetDate?: Date;
 }
 
 interface DateObjInterface {
     id: string | null,
+    /** JS Date物件 */
     Obj: Date | null,
+    /** 日期 */
     day: number | null,
+    /** 樣式 */
     style: string | null,
+    /** 毫秒 */
     time: number | null,
 }
 
