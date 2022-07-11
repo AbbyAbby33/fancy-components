@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
-
+import { cloneDeep } from 'lodash';
 interface CalendarInterface {
     targetDate?: Date;
 }
@@ -13,7 +13,8 @@ interface DateObjInterface {
     id: string | null,
     Obj: Date | null,
     day: number | null,
-    style: string | null
+    style: string | null,
+    time: number | null,
 }
 
 export default function Calendar(props: CalendarInterface) {
@@ -39,17 +40,20 @@ export default function Calendar(props: CalendarInterface) {
         id: null,
         Obj: null,
         day: null,
-        style: null
+        style: null,
+        time: null
     });
     const [preSelectedDayObj, setPreSelectedDayObj] = useState<DateObjInterface>({
         id: null,
         Obj: null,
         day: null,
-        style: null
+        style: null,
+        time: null
     });
     const [yearTitle, setYearTitle] = useState(0);
-    const [monthTitle, setMonthTitle] = useState(0);
+    const [monthTitle, setMonthTitle] = useState<number | null>(0);
     const [dateList, setDateList] = useState<Array<any>>([]);
+    const [showPageDate, setShowPageDate] = useState<Date | null>(null);
 
     // 初始化
     useEffect(() => {
@@ -74,19 +78,29 @@ export default function Calendar(props: CalendarInterface) {
         let firstDay = new Date(year, (month - 1), 1);
         let current = firstDay;
         let newList: any[] = [];
-
         // 當月
         while (firstDay.getMonth() === current.getMonth()) {
             const day = {
                 id: uuidv4(),
                 Obj: current,
                 day: current.getDate(),
-                style: 'this-month'
+                style: 'this-month',
+                time: current.getTime(),
             };
-            // 初次渲染元件要處理顯示藍色
+            let temp = cloneDeep(day);
             if (firstTimeFlag) {
+                // 初次渲染元件 1.要處理顯示藍色 2.紀錄當前顯示頁面
                 if (current.getDate() === initDay.getDate()) {
-                    setSelectedDayObj(day);
+                    setSelectedDayObj(temp);
+                    setShowPageDate(temp.Obj);
+                }
+            } else {
+                // 不是第一次渲染，會發生在切換上下月，要顯示被選中的及前次選中的
+                if (current.getTime() === selectedDayObj?.time) {
+                    setSelectedDayObj(temp);
+                }
+                if (current.getTime() === preSelectedDayObj?.time) {
+                    setPreSelectedDayObj(temp);
                 }
             }
             newList = [...newList, day];
@@ -103,7 +117,8 @@ export default function Calendar(props: CalendarInterface) {
                 id: uuidv4(),
                 Obj: new Date(current.getTime() - 86400000),
                 day: new Date(current.getTime() - 86400000).getDate(),
-                style: 'last-month'
+                style: 'last-month',
+                time: current.getTime(),
             };
             newList = [day, ...newList];
         }
@@ -120,23 +135,48 @@ export default function Calendar(props: CalendarInterface) {
                 id: uuidv4(),
                 Obj: current,
                 day: current.getDate(),
-                style: 'next-month'
+                style: 'next-month',
+                time: current.getTime(),
             };
             newList = [...newList, day];
             // console.log('current', current);
         }
 
-        setDateList(newList);
-        // console.log('selectedDayObj', selectedDayObj, 'firstDay', firstDay, 'current', current, 'dateList', dateList);
+        let temp = cloneDeep(newList);
+        setDateList(temp);
+        // console.log('selectedDayObj', selectedDayObj, 'firstDay', firstDay, 'current', current, 'newList', newList);
     }
 
     /** 點擊日期 */
     // TODO: 補dateObj型別
     const onDateClick = function (event: React.MouseEvent<HTMLElement>, dateObj: any) {
-        // console.log('dateObj', dateObj);
+        let preTemp = cloneDeep(selectedDayObj);
+        let selectedTemp = cloneDeep(dateObj);
+        setPreSelectedDayObj(preTemp);
+        setSelectedDayObj(selectedTemp);
+        // console.log('onDateClick-------dateObj', dateObj, 'preTemp', preTemp, 'selectedTemp', selectedTemp);
+    }
 
-        setPreSelectedDayObj(selectedDayObj);
-        setSelectedDayObj(dateObj);
+    /** 點擊上個月時 */
+    const goLastMonth = function () {
+        if (showPageDate) {
+            let dateTemp = cloneDeep(showPageDate);
+            dateTemp = new Date(dateTemp.setMonth(dateTemp.getMonth() - 1)); // 清空時分秒
+            setShowPageDate(dateTemp);
+            renderCalendar(dateTemp, false);
+            // console.log('showPageDate', showPageDate, 'selectedDayObj', selectedDayObj);
+        }
+    }
+
+    /** 點擊下個月時 */
+    const goNextMonth = function () {
+        if (showPageDate) {
+            let dateTemp = cloneDeep(showPageDate);
+            dateTemp = new Date(dateTemp.setMonth(dateTemp.getMonth() + 1)); // 清空時分秒
+            setShowPageDate(dateTemp);
+            renderCalendar(dateTemp, false);
+            // console.log('showPageDate', showPageDate, 'selectedDayObj', selectedDayObj);
+        }
     }
 
     const CancelButton = styled(Button)({});
@@ -146,9 +186,9 @@ export default function Calendar(props: CalendarInterface) {
             <p>Text</p>
             <div className="year-title">{monthTitle ? monthDisplayList[monthTitle - 1].s : ''},&nbsp;{yearTitle}</div>
             <div className="month-title">
-                <span className="go-last-month-btn">{'<'}</span>
+                <span className="go-last-month-btn" onClick={goLastMonth}>{'<'}</span>
                 <span>{monthTitle ? monthDisplayList[monthTitle - 1].l : ''}&nbsp;&nbsp;{yearTitle}</span>
-                <span className="go-next-month-btn">{'>'}</span>
+                <span className="go-next-month-btn" onClick={goNextMonth}>{'>'}</span>
             </div>
             <div className="date-list">
                 <span className="week">Su</span>
