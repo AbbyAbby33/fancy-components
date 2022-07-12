@@ -30,7 +30,7 @@ export default function Calendar(props: CalendarInterface) {
         { s: 'Mar', l: 'March' },
         { s: 'Apr', l: 'April' },
         { s: 'May', l: 'May' },
-        { s: 'Jun', l: 'Jun' },
+        { s: 'Jun', l: 'June' },
         { s: 'Jul', l: 'July' },
         { s: 'Aug', l: 'August' },
         { s: 'Sept', l: 'September' },
