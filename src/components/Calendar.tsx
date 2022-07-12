@@ -192,6 +192,7 @@ export default function Calendar(props: CalendarInterface) {
         setShowPageYear(yearTitle);
         getYearList(yearTitle);
         setShowDateList(false);
+        setSelectedYear(yearTitle);
     }
 
     /**
