@@ -15,8 +15,8 @@
         line-height: 137.5%;
     }
 
-    // 月份
-    .month-title {
+    // 1.月份 或 2.年標題
+    .sub-title {
         // font-family: "Inter";
         font-weight: 400;
         font-size: 16px;
@@ -25,15 +25,18 @@
         display: flex;
         justify-content: space-between;
 
-        .go-last-month-btn {
+        .go-last-btn {
             cursor: pointer;
         }
-        .go-next-month-btn {
+        .go-next-btn {
+            cursor: pointer;
+        }
+        .go-year-btn {
             cursor: pointer;
         }
     }
 
-    // 日期
+    // 日期列表
     .date-list {
         display: flex;
         flex-wrap: wrap;
@@ -59,6 +62,35 @@
             // border: 1px solid red;
             margin-bottom: 2px;
             border-radius: 50%;
+            &:hover {
+                background-color: #fff;
+                color: #080808;
+                cursor: pointer;
+            }
+            &.pre-selected-date {
+                border: 1px solid #00a3ff;
+            }
+            &.selected-date {
+                background-color: #00a3ff;
+            }
+        }
+    }
+
+    // 年份列表
+    .year-list {
+        display: flex;
+        flex-wrap: wrap;
+
+        .year {
+            width: 68px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            // background: #00a3ff;
+            border-radius: 2px;
+            box-sizing: border-box;
+            padding: 0 10px;
+            margin-bottom: 20px;
             &:hover {
                 background-color: #fff;
                 color: #080808;

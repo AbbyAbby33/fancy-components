@@ -60,6 +60,11 @@ export default function Calendar(props: CalendarInterface) {
     const [dateList, setDateList] = useState<Array<any>>([]);
     const [showPageDate, setShowPageDate] = useState<Date | null>(null);
 
+    //
+    const [showDateList, setShowDateList] = useState<boolean>(true); // true: 顯示日期列表 false: 顯示年份列表
+    const [showPageYear, setShowPageYear] = useState<number>(new Date().getFullYear());
+    const [yearList, setYearList] = useState<Array<number>>([]);
+
     // 初始化
     useEffect(() => {
         let date = targetDate ? targetDate : new Date();
@@ -182,38 +187,110 @@ export default function Calendar(props: CalendarInterface) {
         }
     }
 
+    const goYearList = function () {
+        setShowPageYear(yearTitle);
+        getYearList(yearTitle);
+        setShowDateList(false);
+    }
+
+    /**
+     * 取得年度列表
+     * @param thisYear 目前年度
+     *  */
+    const getYearList = function (year: number) {
+        // 計算起始值
+        const remainder = year % 20;
+        let start = year - remainder + 1;
+        // 讓年度最小從1開始
+        let current = start < 1 ? 1 : start;
+        // 年度列表
+        let yearList = [];
+        for (let i = 0; i < 20; i++) {
+            yearList.push(current);
+            current += 1;
+        }
+        let temp = cloneDeep(yearList);
+        setYearList(temp);
+        // console.log('remainder', remainder, 'start', start, 'yearList', yearList);
+    };
+
+    const goLastYeatList = function () {
+        const year = showPageYear - 20;
+        setShowPageYear(year);
+        getYearList(year);
+    };
+
+    const goNextYeatList = function () {
+        const year = showPageYear + 20;
+        setShowPageYear(year);
+        getYearList(year);
+    };
+
+    /** 點擊年分 */
+    const onClickYear = function (year: number) {
+        if (showPageDate) {
+            let dateTemp = cloneDeep(showPageDate);
+            dateTemp = new Date(dateTemp.setFullYear(year));
+            setShowPageDate(dateTemp);
+            renderCalendar(dateTemp, false);
+            setShowDateList(true);
+            // console.log('showPageDate', showPageDate, 'selectedDayObj', selectedDayObj);
+        }
+    };
+
     const CancelButton = styled(Button)({});
 
     return (
         <div className="fc-calendar">
             <p>Text</p>
             <div className="year-title">{monthTitle ? monthDisplayList[monthTitle - 1].s : ''},&nbsp;{yearTitle}</div>
-            <div className="month-title">
-                <span className="go-last-month-btn" onClick={goLastMonth}>{'<'}</span>
-                <span>{monthTitle ? monthDisplayList[monthTitle - 1].l : ''}&nbsp;&nbsp;{yearTitle}</span>
-                <span className="go-next-month-btn" onClick={goNextMonth}>{'>'}</span>
-            </div>
-            <div className="date-list">
-                <span className="week">Su</span>
-                <span className="week">Mo</span>
-                <span className="week">Tu</span>
-                <span className="week">We</span>
-                <span className="week">Th</span>
-                <span className="week">Fr</span>
-                <span className="week">Sa</span>
-            </div>
-            <div className="date-list">
-                {dateList.map(v => {
-                    return (
-                        <span className={'date ' + v.style + ' ' + (v.id === selectedDayObj.id ? 'selected-date' : '') + ' ' +
-                            (v.id === preSelectedDayObj.id ? 'pre-selected-date' : '')}
-                            key={v.id}
-                            onClick={(event: React.MouseEvent<HTMLElement>) => onDateClick(event, v)}>
-                            {v.day}
-                        </span>
-                    )
-                })}
-            </div>
+            {showDateList ?
+                // 日期
+                <div className="sub-title">
+                    <span className="go-last-btn" onClick={goLastMonth}>{'<'}</span>
+                    <span className="go-year-btn" onClick={goYearList}>{monthTitle ? monthDisplayList[monthTitle - 1].l : ''}&nbsp;&nbsp;{yearTitle}</span>
+                    <span className="go-next-btn" onClick={goNextMonth}>{'>'}</span>
+                </div> :
+                // 年分
+                <div className="sub-title">
+                    <span className="go-last-btn" onClick={goLastYeatList}>{'<'}</span>
+                    <span className="go-date-btn">{yearTitle}</span>
+                    <span className="go-next-btn" onClick={goNextYeatList}>{'>'}</span>
+                </div>
+            }
+            {showDateList ?
+                // 日期列表
+                <div>
+                    <div className="date-list">
+                        <span className="week">Su</span>
+                        <span className="week">Mo</span>
+                        <span className="week">Tu</span>
+                        <span className="week">We</span>
+                        <span className="week">Th</span>
+                        <span className="week">Fr</span>
+                        <span className="week">Sa</span>
+                    </div>
+                    <div className="date-list">
+                        {dateList.map(v => {
+                            return (
+                                <span className={'date ' + v.style + ' ' + (v.id === selectedDayObj.id ? 'selected-date' : '') + ' ' +
+                                    (v.id === preSelectedDayObj.id ? 'pre-selected-date' : '')}
+                                    key={v.id}
+                                    onClick={(event: React.MouseEvent<HTMLElement>) => onDateClick(event, v)}>
+                                    {v.day}
+                                </span>
+                            )
+                        })}
+                    </div>
+                </div> :
+                // 年份列表
+                <div className="year-list">
+                    {yearList.map((v) => {
+                        return (<div className="year" key={v} onClick={() => onClickYear(v)}>{v}</div>)
+
+                    })}
+                </div>
+            }
 
             <Stack spacing={4} direction="row" justifyContent="flex-end">
                 <CancelButton variant="text">Cancel</CancelButton>
