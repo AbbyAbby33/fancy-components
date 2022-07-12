@@ -96,10 +96,7 @@
                 color: #080808;
                 cursor: pointer;
             }
-            &.pre-selected-date {
-                border: 1px solid #00a3ff;
-            }
-            &.selected-date {
+            &.selected-year {
                 background-color: #00a3ff;
             }
         }

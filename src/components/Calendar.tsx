@@ -64,6 +64,7 @@ export default function Calendar(props: CalendarInterface) {
     const [showDateList, setShowDateList] = useState<boolean>(true); // true: 顯示日期列表 false: 顯示年份列表
     const [showPageYear, setShowPageYear] = useState<number>(new Date().getFullYear());
     const [yearList, setYearList] = useState<Array<number>>([]);
+    const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
 
     // 初始化
     useEffect(() => {
@@ -232,6 +233,7 @@ export default function Calendar(props: CalendarInterface) {
             let dateTemp = cloneDeep(showPageDate);
             dateTemp = new Date(dateTemp.setFullYear(year));
             setShowPageDate(dateTemp);
+            setSelectedYear(year);
             renderCalendar(dateTemp, false);
             setShowDateList(true);
             // console.log('showPageDate', showPageDate, 'selectedDayObj', selectedDayObj);
@@ -286,8 +288,10 @@ export default function Calendar(props: CalendarInterface) {
                 // 年份列表
                 <div className="year-list">
                     {yearList.map((v) => {
-                        return (<div className="year" key={v} onClick={() => onClickYear(v)}>{v}</div>)
-
+                        return (
+                            <div className={'year ' + (v === selectedYear ? 'selected-year' : '')}
+                                key={v} onClick={() => onClickYear(v)}>{v}
+                            </div>)
                     })}
                 </div>
             }
