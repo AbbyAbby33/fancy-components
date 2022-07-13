@@ -60,6 +60,7 @@ export default function BirthdayInput() {
                 sx={{
                     width: '335px',
                     height: '58px',
+                    marginBottom: '8px',
                     // label color
                     '& label': {
                         color: '#fff',
