@@ -6,6 +6,9 @@
     border-radius: 10px;
     padding: 24px;
     box-sizing: border-box;
+    // 禁止反白
+    -webkit-user-select: none;
+    user-select: none;
 
     // 年分
     .year-title {
