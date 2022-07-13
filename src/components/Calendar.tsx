@@ -16,14 +16,12 @@ interface CalendarInterface {
 
 interface DateObjInterface {
     id: string | null,
-    /** JS Date物件 */
-    Obj: Date | null,
     /** 日期 */
     day: number | null,
     /** 樣式 */
     style: string | null,
     /** 毫秒 */
-    time: number | null,
+    time: number,
 }
 
 export default function Calendar(props: CalendarInterface) {
@@ -47,17 +45,15 @@ export default function Calendar(props: CalendarInterface) {
 
     const [selectedDayObj, setSelectedDayObj] = useState<DateObjInterface>({
         id: null,
-        Obj: null,
         day: null,
         style: null,
-        time: null
+        time: 0
     });
     const [preSelectedDayObj, setPreSelectedDayObj] = useState<DateObjInterface>({
         id: null,
-        Obj: null,
         day: null,
         style: null,
-        time: null
+        time: 0
     });
     const [yearTitle, setYearTitle] = useState(0);
     const [monthTitle, setMonthTitle] = useState<number | null>(0);
@@ -97,7 +93,6 @@ export default function Calendar(props: CalendarInterface) {
         while (firstDay.getMonth() === current.getMonth()) {
             const day = {
                 id: uuidv4(),
-                Obj: current,
                 day: current.getDate(),
                 style: 'this-month',
                 time: current.getTime(),
@@ -107,7 +102,7 @@ export default function Calendar(props: CalendarInterface) {
                 // 初次渲染元件 1.要處理顯示藍色 2.紀錄當前顯示頁面
                 if (current.getDate() === initDay.getDate()) {
                     setSelectedDayObj(temp);
-                    setShowPageDate(temp.Obj);
+                    setShowPageDate(new Date(temp.time));
                 }
             } else {
                 // 不是第一次渲染，會發生在切換上下月，要顯示被選中的及前次選中的
@@ -130,7 +125,6 @@ export default function Calendar(props: CalendarInterface) {
             current = new Date(current.getTime() - 86400000); // before
             const day = {
                 id: uuidv4(),
-                Obj: current,
                 day: current.getDate(),
                 style: 'last-month',
                 time: current.getTime(),
@@ -147,7 +141,6 @@ export default function Calendar(props: CalendarInterface) {
             current = new Date(current.getTime() + 86400000); // before
             const day = {
                 id: uuidv4(),
-                Obj: current,
                 day: current.getDate(),
                 style: 'next-month',
                 time: current.getTime(),
@@ -165,6 +158,7 @@ export default function Calendar(props: CalendarInterface) {
     const onDateClick = function (event: React.MouseEvent<HTMLElement>, dateObj: any) {
         let preTemp = cloneDeep(selectedDayObj);
         let selectedTemp = cloneDeep(dateObj);
+
         setPreSelectedDayObj(preTemp);
         setSelectedDayObj(selectedTemp);
         // console.log('onDateClick-------dateObj', dateObj, 'preTemp', preTemp, 'selectedTemp', selectedTemp);

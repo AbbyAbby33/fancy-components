@@ -5,14 +5,12 @@ import { cloneDeep } from 'lodash';
 
 interface DateObjInterface {
     id: string | null,
-    /** JS Date物件 */
-    Obj: Date | null,
     /** 日期 */
     day: number | null,
     /** 樣式 */
     style: string | null,
     /** 毫秒 */
-    time: number | null,
+    time: number,
 }
 
 export default function BirthdayInput() {
@@ -33,8 +31,8 @@ export default function BirthdayInput() {
     };
 
     const onClickOk = function (dateObj: DateObjInterface) {
-        console.log('onClickOk------dateObj', dateObj);
-        let dateTemp = cloneDeep(dateObj.Obj)
+        // console.log('onClickOk------dateObj', dateObj);
+        let dateTemp = new Date(dateObj.time);
         const month = dateTemp ? (dateTemp?.getMonth() + 1).toString().padStart(2, '0') : '';
         const day = dateTemp ? dateTemp?.getDate().toString().padStart(2, '0') : '';
         const year = dateTemp ? dateTemp?.getFullYear() : '';
@@ -46,7 +44,7 @@ export default function BirthdayInput() {
     };
 
     const onClickCancel = function () {
-        console.log('onClickCancel');
+        // console.log('onClickCancel');
         setOpenCalendar(false);
     };
 
