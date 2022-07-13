@@ -241,7 +241,9 @@ export default function Calendar(props: CalendarInterface) {
         }
     };
 
-    const CancelButton = styled(Button)({});
+    const CancelButton = styled(Button)({
+        textTransform: 'capitalize'
+    });
 
     return (
         <div className="fc-calendar">
