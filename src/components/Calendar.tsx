@@ -7,7 +7,11 @@ import { styled } from '@mui/material/styles';
 import { cloneDeep } from 'lodash';
 interface CalendarInterface {
     /** 選取日期 */
-    targetDate?: Date;
+    targetDate?: Date | null;
+    /** 按下OK的CB */
+    handleClickOk: any;
+    /** 按下Cancel的CB */
+    handleClickCancel: any;
 }
 
 interface DateObjInterface {
@@ -39,7 +43,7 @@ export default function Calendar(props: CalendarInterface) {
         { s: 'Dec', l: 'December' }
     ];
 
-    const { targetDate } = props;
+    const { targetDate, handleClickOk, handleClickCancel } = props;
 
     const [selectedDayObj, setSelectedDayObj] = useState<DateObjInterface>({
         id: null,
@@ -241,6 +245,15 @@ export default function Calendar(props: CalendarInterface) {
         }
     };
 
+    const onClickOk = function () {
+        const dateTemp = cloneDeep(selectedDayObj);
+        handleClickOk(dateTemp);
+    }
+
+    const onClickCancel = function () {
+        handleClickCancel();
+    }
+
     const CancelButton = styled(Button)({
         textTransform: 'capitalize'
     });
@@ -300,8 +313,8 @@ export default function Calendar(props: CalendarInterface) {
             }
 
             <Stack spacing={4} direction="row" justifyContent="flex-end">
-                <CancelButton variant="text">Cancel</CancelButton>
-                <Button variant="text">OK</Button>
+                <CancelButton variant="text" onClick={() => onClickCancel()}>Cancel</CancelButton>
+                <Button variant="text" onClick={() => onClickOk()}>OK</Button>
             </Stack>
         </div>
     )
