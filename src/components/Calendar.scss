@@ -1,10 +1,13 @@
+$dateWidth: 37px;
+$barSpace: 3px;
+
 .fc-calendar {
     width: 320px;
     background: #1b1b1b;
     box-shadow: 4px 4px 20px 0px #0000004d;
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    padding: 16px 24px;
+    padding: 16px 16px;
     box-sizing: border-box;
     // 禁止反白
     -webkit-user-select: none;
@@ -12,12 +15,18 @@
     -o-user-select: none;
     user-select: none;
 
+    //
+    .text-bar {
+        margin: 6px 0;
+    }
+
     // 年分
     .year-title {
         // font-family: "Inter";
         font-weight: 700;
         font-size: 32px;
         line-height: 137.5%;
+        padding: 0 $barSpace;
     }
 
     // 1.月份 或 2.年標題
@@ -30,6 +39,7 @@
         display: flex;
         justify-content: space-between;
         margin: 24px 0 12px;
+        padding: 0 $barSpace;
 
         .go-last-btn {
             cursor: pointer;
@@ -48,25 +58,28 @@
         flex-wrap: wrap;
 
         .week {
-            width: 38px;
-            height: 38px;
-            line-height: 38px;
+            width: $dateWidth;
+            height: $dateWidth;
+            line-height: $dateWidth;
             text-align: center;
-            margin-bottom: 2px;
+            font-size: 11px;
+            margin: 0 2px;
+            box-sizing: border-box;
         }
 
         .date {
-            width: 38px;
-            height: 38px;
-            line-height: 38px;
+            width: $dateWidth;
+            height: $dateWidth;
+            line-height: $dateWidth;
             text-align: center;
+            font-size: 14px;
             &.next-month,
             &.last-month {
                 opacity: 0.5;
             }
             box-sizing: border-box;
             // border: 1px solid red;
-            margin-bottom: 2px;
+            margin: 0 2px;
             border-radius: 50%;
             &:hover {
                 background-color: #fff;
@@ -86,6 +99,7 @@
     .year-list {
         display: flex;
         flex-wrap: wrap;
+        margin-top: 32px;
 
         .year {
             width: 68px;
@@ -96,7 +110,7 @@
             border-radius: 2px;
             box-sizing: border-box;
             padding: 0 10px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             &:hover {
                 background-color: #fff;
                 color: #080808;
@@ -108,12 +122,15 @@
         }
     }
 
-    // 按鈕
-    button {
-        color: #fff;
-        font-weight: 600;
-        &.cancel-button {
-            text-transform: capitalize;
+    .button-container {
+        margin: 10px 6px 0 0;
+        // 按鈕
+        button {
+            color: #fff;
+            font-weight: 600;
+            &.cancel-button {
+                text-transform: capitalize;
+            }
         }
     }
 }

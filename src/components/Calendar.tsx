@@ -250,7 +250,7 @@ export default function Calendar(props: CalendarInterface) {
 
     return (
         <div className="fc-calendar">
-            <p>Text</p>
+            <p className="text-bar">Text</p>
             <div className="year-title">{monthTitle ? monthDisplayList[monthTitle - 1].s : ''},&nbsp;{yearTitle}</div>
             {showDateList ?
                 // 日期
@@ -302,7 +302,7 @@ export default function Calendar(props: CalendarInterface) {
                 </div>
             }
 
-            <Stack spacing={4} direction="row" justifyContent="flex-end">
+            <Stack spacing={4} direction="row" justifyContent="flex-end" className="button-container">
                 <Button className="cancel-button" variant="text" onClick={() => onClickCancel()}>Cancel</Button>
                 <Button variant="text" onClick={() => onClickOk()}>OK</Button>
             </Stack>
