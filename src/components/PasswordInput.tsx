@@ -58,6 +58,9 @@ export default function PasswordInput() {
         "& svg": {
             // background: "red",
             marginRight: "12px"
+        },
+        "& p": {
+            margin: "8px 0"
         }
     }));
 
@@ -67,7 +70,7 @@ export default function PasswordInput() {
             {/* <TextField id="password-basic" label="Password" variant="outlined" placeholder="Password"/> */}
 
             {/* 2.有focused版本 */}
-            <TextField id="password-basic" label="Password" variant="outlined" placeholder="Password" focused
+            <TextField id="password-basic" label="Password" variant="outlined" placeholder="Password" focused type="password"
                 sx={{
                     width: "335px",
                     height: "58px",
@@ -110,7 +113,7 @@ export default function PasswordInput() {
                 padding: "8px 12px",
                 boxShadow: "4px 4px 20px rgba(0, 0, 0, 0.3)",
                 borderRadius: "8px",
-                marginTop: "8px",
+                marginTop: "18px",
                 color: "#fff",
                 display: inputFocus ? "block" : "none"
             }}>
