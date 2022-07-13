@@ -4,7 +4,7 @@
     box-shadow: 4px 4px 20px 0px #0000004d;
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    padding: 24px;
+    padding: 16px 24px;
     box-sizing: border-box;
     // 禁止反白
     -webkit-user-select: none;
@@ -29,6 +29,7 @@
         // text-align: center;
         display: flex;
         justify-content: space-between;
+        margin: 24px 0 12px;
 
         .go-last-btn {
             cursor: pointer;
