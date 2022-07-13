@@ -248,10 +248,6 @@ export default function Calendar(props: CalendarInterface) {
         handleClickCancel();
     }
 
-    const CancelButton = styled(Button)({
-        textTransform: 'capitalize'
-    });
-
     return (
         <div className="fc-calendar">
             <p>Text</p>
@@ -307,7 +303,7 @@ export default function Calendar(props: CalendarInterface) {
             }
 
             <Stack spacing={4} direction="row" justifyContent="flex-end">
-                <CancelButton variant="text" onClick={() => onClickCancel()}>Cancel</CancelButton>
+                <Button className="cancel-button" variant="text" onClick={() => onClickCancel()}>Cancel</Button>
                 <Button variant="text" onClick={() => onClickOk()}>OK</Button>
             </Stack>
         </div>

@@ -112,5 +112,8 @@
     button {
         color: #fff;
         font-weight: 600;
+        &.cancel-button {
+            text-transform: capitalize;
+        }
     }
 }
